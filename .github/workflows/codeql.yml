@@ -10,6 +10,11 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [ 'javascript' ]
+        # Add other languages here as necessary
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,24 +22,23 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          languages: javascript
-          # replace <language> with the language of the repository you want to scan
+          languages: ${{ matrix.language }}
+
+      - name: Build
+        run: |
+          # Build the code here
+          # Replace the command below with your build command
+          npm install
 
       - name: Analyze with CodeQL
         uses: github/codeql-action/analyze@v1
         with:
-          # Replace `<username>` and `<repository>` with the name of your forked repository.
-          # If you want to scan a different branch, replace `main` with the branch name.
-          # If you want to scan a specific commit, replace `main` with the commit hash.
+          # Replace the repository URL below with the URL of the repository you want to scan
+          # If you want to scan a specific branch or commit, append `#branch` or `#commit` to the URL
+          # For example: https://github.com/username/repo.git#main
           # For more information on specifying targets, see: https://codeql.github.com/docs/codeql-cli/commands/codeql-cli-scan/#specifying-targets
-          targets: vijay-art/test-rahi@main
+          targets: https://github.com/vijay-art/test-rahi.git
         env:
-          # Replace `<language>` with the language of the repository you want to scan.
-          # The value should be in the format `LANGUAGE_NAME_VERSION`
-          # For example: `javascript/16.0.0`
-          # For more information on supported languages, see: https://help.semmle.com/codeql/codeql-cli/languages/language-support.html
-          CODEQL_LANGUAGE: <language>
-          # Replace `<path to CodeQL database>` with the path where you want to store the CodeQL database.
-          # The default value is `codeql-database`, but you can choose a different name.
-          # For more information on the CodeQL database, see: https://codeql.github.com/docs/codeql-cli/commands/codeql-cli-database-create/
-          CODEQL_DATABASE_PATH: <path to CodeQL database>
+          # Replace the value below with the language version you are using
+          # For example, 'javascript/16.0.0'
+          CODEQL_LANGUAGE: ${{ matrix.language }}/version
