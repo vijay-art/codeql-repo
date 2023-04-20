@@ -31,7 +31,7 @@ jobs:
           npm install
 
       - name: Analyze with CodeQL
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
         with:
           # Replace the repository URL below with the URL of the repository you want to scan
           # If you want to scan a specific branch or commit, append `#branch` or `#commit` to the URL
@@ -41,4 +41,4 @@ jobs:
         env:
           # Replace the value below with the language version you are using
           # For example, 'javascript/16.0.0'
-          CODEQL_LANGUAGE: ${{ matrix.language }}/version
+          CODEQL_LANGUAGE: ${{ matrix.javascript }}/version
