@@ -71,4 +71,5 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
+       targets: https://github.com/vijay-art/test-rahi
         category: "/language:${{matrix.language}}"
